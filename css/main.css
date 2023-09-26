@@ -209,6 +209,14 @@ header .main-menu .item .item__contents .contents__menu > ul {
 header .main-menu .item .item__contents .contents__menu > ul > li {
   width: 220px;
 }
+header .main-menu .item .item__contents .contents__menu > ul > li a {
+  padding: 3px 0 12px 0;
+  font-size: 14px;
+  color: #fff;
+}
+header .main-menu .item .item__contents .contents__menu > ul > li a:hover {
+  text-decoration: underline;
+}
 header .main-menu .item .item__contents .contents__menu > ul > li h4 {
   padding: 3px 0 12px 0;
   font-size: 14px;
