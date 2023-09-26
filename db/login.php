@@ -1,25 +1,7 @@
 <?php
 session_start(); // 세션 시작
 
-// 데이터베이스 연결 설정
-$servername = "localhost"; // 데이터베이스 서버 주소
-$username = "root"; // 데이터베이스 사용자 이름
-$password = "1234"; // 데이터베이스 비밀번호
-$dbname = "starbucks"; // 데이터베이스 이름
-$port = "3308";
-
-// 데이터베이스 연결
-$conn = new mysqli($servername, $username, $password, $dbname, $port);
-
-// 연결 오류 확인
-if ($conn->connect_error) {
-    die("데이터베이스 연결 실패: " . $conn->connect_error);
-} else {
-    echo "데이터베이스 연결 성공!";
-}
-
-$username = $_POST["username"];
-$password = $_POST["password"];
+include('./connect.php');
 
 // TODO :  SQL Injection 공격을 방지하기 위해 password_hash 함수로 해싱하기
 // 폼에서 제출된 사용자 이름과 비밀번호 가져오기
