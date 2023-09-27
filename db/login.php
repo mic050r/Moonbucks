@@ -15,7 +15,7 @@ $result = mysqli_query($conn, $query);
 if (mysqli_num_rows($result) == 1) {
     // 로그인 성공
     $_SESSION['username'] = $username;
-    header('Location: /StarBucks/index.html'); // 로그인 성공 시 리다이렉션할 페이지로 이동
+    header('Location: /StarBucks/index2.html'); // 로그인 성공 시 리다이렉션할 페이지로 이동
 } else {
     // 로그인 실패
     echo "로그인 실패. 다시 시도하세요.";
