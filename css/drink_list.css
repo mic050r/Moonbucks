@@ -1,3 +1,6 @@
+table.coffeeInfo {
+  display: none;
+}
 #container {
   width: 100%;
 }
