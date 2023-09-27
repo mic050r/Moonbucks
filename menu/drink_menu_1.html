@@ -385,6 +385,7 @@
       </div>
     </header>
 
+    <!-- 음료 목록 -->
     <section class="dirink_menu_1">
       <id id="container">
         <!-- 서브 타이틀 -->
@@ -393,7 +394,7 @@
             <h2></h2>
             <ul class="smap">
               <li>
-                <a href="/index.do"
+                <a href="/StarBucks/index.html"
                   ><img
                     src="//image.istarbucks.co.kr/common/img/common/icon_home.png"
                     alt="홈으로"
@@ -405,14 +406,14 @@
                   src="//image.istarbucks.co.kr/common/img/common/icon_arrow.png"
                   alt="하위메뉴" />
               </li>
-              <li class="en"><a href="/menu/index.do">MENU</a></li>
+              <li class="en"><a href="javascript:void(0)">MENU</a></li>
               <li>
                 <img
                   class="arrow"
                   src="//image.istarbucks.co.kr/common/img/common/icon_arrow.png"
                   alt="하위메뉴" />
               </li>
-              <li><a href="/menu/drink_list.do">음료</a></li>
+              <li><a href="/StarBucks/menu/drink_list.html">음료</a></li>
               <li>
                 <img
                   class="arrow"
@@ -420,7 +421,9 @@
                   alt="하위메뉴" />
               </li>
               <li>
-                <a href="/menu/drink_list.do" class="cate">2023 Autumn 1</a>
+                <a href="/StarBucks/menu/drink_list.html" class="cate"
+                  >2023 Autumn 1</a
+                >
               </li>
               <li>
                 <img
@@ -448,7 +451,7 @@
                     tabindex="-1"
                     aria-hidden="true"
                     role="presentation"
-                    ><!-- 접근성_20171123 tabindex, aria, role 추가 --><img
+                    ><img
                       class="zoomImg"
                       src="https://image.istarbucks.co.kr/upload/store/skuimg/2023/09/[9200000004785]_20230906134507356.jpg"
                       data-zoom-image="https://image.istarbucks.co.kr/upload/store/skuimg/2023/09/[9200000004785]_20230906134507356.jpg"
@@ -463,8 +466,8 @@
                     role="presentation"
                     ><img
                       src="//image.istarbucks.co.kr/common/img/menu/more.png"
-                      alt="상세이미지" /></a
-                  ><!-- 접근성_20171123 alt 추가 -->
+                      alt="상세이미지"
+                  /></a>
                 </p>
               </div>
               <div class="product_thum_wrap" id="product_thum_wrap">
@@ -553,171 +556,59 @@
                       </li>
                     </ul>
                   </div>
-                  <div class="bx-controls bx-has-controls-direction">
-                    <div class="bx-controls-direction">
-                      <a class="bx-prev" href="">Prev</a
-                      ><a class="bx-next" href="">Next</a>
-                    </div>
-                  </div>
                 </div>
-                <div class="m_view_controller">
-                  <div class="m_view_controls"></div>
-                  <div class="m_view_pagers">
-                    <div class="bx-pager bx-default-pager">
-                      <div class="bx-pager-item">
-                        <a
-                          href=""
-                          data-slide-index="0"
-                          class="bx-pager-link active"
-                          >1</a
-                        >
-                      </div>
-                      <div class="bx-pager-item">
-                        <a href="" data-slide-index="1" class="bx-pager-link"
-                          >2</a
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <p id="prevBtn">
-                  <a href="javascript:void(0)" role="button">이전 버튼</a
-                  ><!-- 접근성_20171123 role 추가 -->
-                </p>
-                <p id="nextBtn">
-                  <a href="javascript:void(0)" role="button">다음 버튼</a
-                  ><!-- 접근성_20171123 role 추가 -->
-                </p>
               </div>
               <form method="post">
                 <fieldset>
-                  <legend class="hid">제품 영양 정보</legend>
+                  <!-- <legend class="hid">가격 정보</legend> -->
                   <div class="product_view_info">
                     <div class="product_info_head">
-                      <p class="tit">제품 영양 정보</p>
+                      <p class="tit">가격 정보</p>
                       <div class="product_select_wrap2">
                         <div class="selectTxt2" id="product_info01">
-                          Tall(톨) / 355ml (12 fl oz)
-                        </div>
-
-                        <div
-                          class="select_box select_box04"
-                          style="display: none"
-                          id="productSelectBox">
-                          <label class="value" for="product_info02">일반</label>
-                          <select title="제품 영양 정보" id="product_info02">
-                            <option value="일반">일반</option>
-                            <option value="라이트">라이트</option>
-                          </select>
+                          5,6000원
                         </div>
                       </div>
                     </div>
-                    <div class="product_info_content">
-                      <ul>
-                        <li class="kcal">
-                          <dl>
-                            <dt>1회 제공량 (kcal)</dt>
-                            <dd>170</dd>
-                          </dl>
-                        </li>
-                        <li class="sat_FAT">
-                          <dl>
-                            <dt>포화지방 (g)</dt>
-                            <dd>10</dd>
-                          </dl>
-                        </li>
-                        <li class="protein">
-                          <dl>
-                            <dt>단백질 (g)</dt>
-                            <dd>1</dd>
-                          </dl>
-                        </li>
-                        <li class="fat" style="display: none">
-                          <dl>
-                            <dt>지방 (g)</dt>
-                            <dd>12</dd>
-                          </dl>
-                        </li>
-                        <li class="trans_FAT" style="display: none">
-                          <dl>
-                            <dt>트랜스지방 (g)</dt>
-                            <dd>0</dd>
-                          </dl>
-                        </li>
-                      </ul>
-                      <ul>
-                        <li class="sodium">
-                          <dl>
-                            <dt>나트륨 (mg)</dt>
-                            <dd>50</dd>
-                          </dl>
-                        </li>
-                        <li class="sugars">
-                          <dl>
-                            <dt>당류 (g)</dt>
-                            <dd>11</dd>
-                          </dl>
-                        </li>
-                        <li class="caffeine last">
-                          <dl>
-                            <dt>카페인 (mg)</dt>
-                            <dd>138</dd>
-                          </dl>
-                        </li>
-                        <li class="cholesterol" style="display: none">
-                          <dl>
-                            <dt>콜레스테롤 (mg)</dt>
-                            <dd>5</dd>
-                          </dl>
-                        </li>
-                        <li class="chabo" style="display: none">
-                          <dl>
-                            <dt>탄수화물 (g)</dt>
-                            <dd>13</dd>
-                          </dl>
-                        </li>
-                      </ul>
+                    <!-- TODO : +, - 아이콘 추가하기 및 버튼에 따른 개수 증가 만들기 -->
+                    <div class="prod-buy-quantity">
+                      <div class="prod-buy__quantity">
+                        <div class="prod-quantity__form">
+                          <input
+                            type="text"
+                            value="1"
+                            class="prod-quantity__input"
+                            maxlength="6"
+                            autocomplete="off" />
+                          <div style="display: table-cell; vertical-align: top">
+                            <button class="prod-quantity__plus" type="button">
+                              <i class="fas fa-minus"></i>
+                              <!-- 마이너스 아이콘 -->
+                            </button>
+                            <button
+                              class="prod-quantity__minus"
+                              type="button"
+                              disabled="">
+                              <i class="fas fa-plus"></i>
+                              <!-- 플러스 아이콘 -->
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="product_factor">
-                      <p>알레르기 유발요인 : 우유</p>
-                    </div>
-                    <!-- s: 230623 등록 버튼 위치이동 및 디자인 변경 -->
                     <div class="myDrink">
                       <a
                         href="javascript:void(0);"
                         role="button"
-                        title="나만의 음료로 등록 버튼"
-                        ><span>나만의 음료로 등록</span></a
+                        title="장바구니"
+                        ><span>장바구니에 등록</span></a
                       >
                     </div>
-
-                    <p
-                      class="bnr_coldbrew_wrap bnr_teavana"
-                      style="display: none">
-                      <a href="/menuStory/teavana.do"
-                        ><img
-                          src="https://image.istarbucks.co.kr/img/event/2023/230125_teavana_banner_img.png"
-                          alt="스타벅스 티바나 만나보기"
-                      /></a>
-                    </p>
-
-                    <p
-                      class="bnr_coldbrew_wrap bnr_coldbrew"
-                      style="display: none">
-                      <a href="/store/store_coldbrew.do"
-                        ><img
-                          src="/common/img/menu/bnr_coldbrew.png"
-                          alt="콜드브루 소개 페이지 바로가기" /><!-- 접근성_20171123 alt 추가 --></a
-                      >
-                    </p>
-                    <!-- 콜드브루 배너 추가 end -->
                   </div>
                 </fieldset>
               </form>
             </div>
           </div>
-          <div class="product_view_wrap2"></div>
-          <!-- 제품 상세보기 end -->
         </div>
       </id>
     </section>
