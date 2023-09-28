@@ -24,8 +24,10 @@ if ($result) {
     $drinkInfo = mysqli_fetch_assoc($result);
 
     // JSON 형식으로 응답 보내기
-    header('Content-Type: application/json');
-    echo json_encode($drinkInfo);
+    header('Content-Type: application/json; charset=UTF-8');
+    echo json_encode($drinkInfo, JSON_UNESCAPED_UNICODE);
+
+
 } else {
     echo "음료 정보를 가져오지 못했습니다.";
 }

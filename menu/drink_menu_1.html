@@ -398,10 +398,11 @@
           url: `../db/drink_info.php?drinkId=${drinkId}`,
           method: "GET",
           dataType: "json",
+          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
           success: function (drinkInfo) {
             // 서버에서 받은 음료 정보를 처리하여 웹 페이지에 표시
-            console.log(drinkInfo);
 
+            console.log(drinkInfo);
             // 엘리먼트 선택자 개선
             $(".product_name").text(drinkInfo.product_name);
             $(".product_english_name").text(drinkInfo.product_english_name);
@@ -610,19 +611,17 @@
                             value="1"
                             class="prod-quantity__input"
                             maxlength="6"
-                            autocomplete="off" />
+                            autocomplete="off"
+                            id="quantityInput" />
                           <div style="display: table-cell; vertical-align: top">
-                            <button class="prod-quantity__plus" type="button">
-                              <i class="fas fa-minus"></i>
-                              <!-- 마이너스 아이콘 -->
-                            </button>
+                            <button
+                              class="prod-quantity__plus"
+                              type="button"
+                              id="plusButton"></button>
                             <button
                               class="prod-quantity__minus"
                               type="button"
-                              disabled="">
-                              <i class="fas fa-plus"></i>
-                              <!-- 플러스 아이콘 -->
-                            </button>
+                              id="minusButton"></button>
                           </div>
                         </div>
                       </div>
@@ -632,6 +631,7 @@
                         href="javascript:void(0);"
                         role="button"
                         title="장바구니"
+                        class="addToCart"
                         ><span>장바구니에 등록</span></a
                       >
                     </div>
@@ -641,22 +641,49 @@
                     document.addEventListener("DOMContentLoaded", () => {
                       const addToCartButtons =
                         document.querySelectorAll(".addToCart");
+                      const urlParams = new URLSearchParams(
+                        window.location.search
+                      );
+                      const productId = urlParams.get("drinkId");
 
+                      const quantityInput =
+                        document.getElementById("quantityInput");
+                      const plusButton = document.getElementById("plusButton");
+                      const minusButton =
+                        document.getElementById("minusButton");
+
+                      // 초기 상품 개수 설정
+                      let productQuantity = 1;
+
+                      // 상품 개수를 입력란에 설정
+                      quantityInput.value = productQuantity;
+
+                      // "플러스" 버튼 클릭 시 상품 개수 증가
+                      plusButton.addEventListener("click", () => {
+                        productQuantity++;
+                        quantityInput.value = productQuantity;
+                      });
+
+                      // "마이너스" 버튼 클릭 시 상품 개수 감소
+                      minusButton.addEventListener("click", () => {
+                        if (productQuantity > 1) {
+                          productQuantity--;
+                          quantityInput.value = productQuantity;
+                        }
+                      });
+
+                      // 장바구니 버튼을 클릭했을 때 addToCart함수에 상품id와 상품 개수 보내기
                       addToCartButtons.forEach((button) => {
                         button.addEventListener("click", () => {
-                          // 클릭한 버튼에 연결된 상품 정보를 가져오거나 직접 정보를 설정합니다.
-                          const productId = 1; // 예: 상품 ID를 설정
-                          const quantity = 1; // 예: 수량을 설정
-
-                          // 서버로 상품 정보를 보내 장바구니에 추가 요청을 합니다.
-                          addToCart(productId, quantity);
+                          addToCart(productId, productQuantity);
+                          console.log(productId, productQuantity);
                         });
                       });
 
-                      function addToCart(productId, quantity) {
-                        // AJAX 또는 Fetch를 사용하여 서버로 장바구니 추가 요청을 보냅니다.
+                      // 상품ID와 상품 개수를 PHP에 보내기
+                      function addToCart(productId, productQuantity) {
                         fetch(
-                          `/add_to_cart.php?productId=${productId}&quantity=${quantity}`
+                          `../db/add_to_cart.php?productId=${productId}&quantity=${productQuantity}`
                         )
                           .then((response) => {
                             if (!response.ok) {
@@ -665,9 +692,7 @@
                             return response.json();
                           })
                           .then((result) => {
-                            // 장바구니 추가 결과를 처리합니다.
                             console.log(result);
-                            // 이 부분에서 장바구니 추가 결과를 처리합니다.
                           })
                           .catch((error) => {
                             console.error("에러 발생:", error);
