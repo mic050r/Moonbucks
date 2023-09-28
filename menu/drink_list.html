@@ -45,6 +45,9 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
+    <!-- JQuery추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/drink_list.css" />
 
@@ -385,6 +388,7 @@
       </div>
     </header>
 
+    <!-- Drink List -->
     <section class="drink_lsit">
       <div class="sub_tit_wrap">
         <div class="sub_tit_inner">
@@ -581,6 +585,8 @@
                         href="javascript:void(0)"
                         class="goDrinkView"
                         prod="9200000004785"
+                        id="1"
+                        name="1"
                         ><img
                           src="https://image.istarbucks.co.kr/upload/store/skuimg/2023/09/[9200000004785]_20230906134506875.jpg"
                           alt="미키 딜라이트 콜드 브루"
@@ -2951,12 +2957,26 @@
             </dd>
           </dl>
         </div>
-        <!-- 160928 검색결과 없을 때 -->
-        <div class="product_no_result" style="display: none">
-          <p>검색 결과가 없습니다.</p>
-        </div>
-        <!-- 160928 검색결과 없을 때 end -->
       </dd>
+      <script>
+        // JavaScript 코드
+        $(document).ready(function () {
+          $(".goDrinkView").click(function () {
+            // 클릭한 음료의 id를 추출
+            const drinkId = $(this).attr("id");
+
+            // AJAX 요청을 보내기 전에 URL에서 drinkId를 추출
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlDrinkId = urlParams.get("drinkId");
+
+            // 추출한 값 확인 (개발 중에 사용)
+            console.log("Drink ID:", urlDrinkId);
+
+            // drinkId를 URL 파라미터로 전달하여 다음 페이지로 이동
+            window.location.href = `drink_menu_1.html?drinkId=${drinkId}`;
+          });
+        });
+      </script>
     </section>
     <!--FOOTER-->
     <footer>

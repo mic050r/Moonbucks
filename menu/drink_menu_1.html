@@ -45,6 +45,9 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
+    <!-- JQuery추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/drink_menu.css" />
 
@@ -386,6 +389,36 @@
     </header>
 
     <!-- 음료 목록 -->
+    <script>
+      $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const drinkId = urlParams.get("drinkId");
+
+        $.ajax({
+          url: `../db/drink_info.php?drinkId=${drinkId}`,
+          method: "GET",
+          dataType: "json",
+          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+          success: function (drinkInfo) {
+            // 서버에서 받은 음료 정보를 처리하여 웹 페이지에 표시
+
+            console.log(drinkInfo);
+            // 엘리먼트 선택자 개선
+            $(".product_name").text(drinkInfo.product_name);
+            $(".product_english_name").text(drinkInfo.product_english_name);
+            $(".description").text(drinkInfo.description);
+            $(".price").text(drinkInfo.price);
+          },
+          error: function (xhr, status, error) {
+            console.error("에러 발생:", error);
+            // 사용자에게 에러 메시지 표시
+            $("#error_message").text(
+              "음료 정보를 불러오는 중에 오류가 발생했습니다."
+            );
+          },
+        });
+      });
+    </script>
     <section class="dirink_menu_1">
       <id id="container">
         <!-- 서브 타이틀 -->
@@ -499,12 +532,13 @@
             </div>
             <div class="product_view_detail">
               <div class="myAssignZone">
-                <h4>
-                  미키 딜라이트 콜드 브루<br /><span
+                <h4 class="product_name">
+                  미키 딜라이트 콜드 브루<br />
+                  <span class="product_english_name"
                     >Mickey Delight Cold Brew</span
                   >
                 </h4>
-                <p class="t1">
+                <p class="description">
                   스타벅스와 디즈니의 색다른 만남! <br />달콤하고 부드러운
                   글레이즈드 폼과 깔끔한 콜드 브루의 조합 <br />번트 카라멜
                   토핑으로 표현한 미키 마우스를 통해 <br />즐거운 추억을 만들어
@@ -565,9 +599,7 @@
                     <div class="product_info_head">
                       <p class="tit">가격 정보</p>
                       <div class="product_select_wrap2">
-                        <div class="selectTxt2" id="product_info01">
-                          5,6000원
-                        </div>
+                        <div class="price" id="product_info01">5,6000원</div>
                       </div>
                     </div>
                     <!-- TODO : +, - 아이콘 추가하기 및 버튼에 따른 개수 증가 만들기 -->
@@ -579,19 +611,17 @@
                             value="1"
                             class="prod-quantity__input"
                             maxlength="6"
-                            autocomplete="off" />
+                            autocomplete="off"
+                            id="quantityInput" />
                           <div style="display: table-cell; vertical-align: top">
-                            <button class="prod-quantity__plus" type="button">
-                              <i class="fas fa-minus"></i>
-                              <!-- 마이너스 아이콘 -->
-                            </button>
+                            <button
+                              class="prod-quantity__plus"
+                              type="button"
+                              id="plusButton"></button>
                             <button
                               class="prod-quantity__minus"
                               type="button"
-                              disabled="">
-                              <i class="fas fa-plus"></i>
-                              <!-- 플러스 아이콘 -->
-                            </button>
+                              id="minusButton"></button>
                           </div>
                         </div>
                       </div>
@@ -601,10 +631,75 @@
                         href="javascript:void(0);"
                         role="button"
                         title="장바구니"
+                        class="addToCart"
                         ><span>장바구니에 등록</span></a
                       >
                     </div>
                   </div>
+                  <!-- JavaScript 코드 -->
+                  <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                      const addToCartButtons =
+                        document.querySelectorAll(".addToCart");
+                      const urlParams = new URLSearchParams(
+                        window.location.search
+                      );
+                      const productId = urlParams.get("drinkId");
+
+                      const quantityInput =
+                        document.getElementById("quantityInput");
+                      const plusButton = document.getElementById("plusButton");
+                      const minusButton =
+                        document.getElementById("minusButton");
+
+                      // 초기 상품 개수 설정
+                      let productQuantity = 1;
+
+                      // 상품 개수를 입력란에 설정
+                      quantityInput.value = productQuantity;
+
+                      // "플러스" 버튼 클릭 시 상품 개수 증가
+                      plusButton.addEventListener("click", () => {
+                        productQuantity++;
+                        quantityInput.value = productQuantity;
+                      });
+
+                      // "마이너스" 버튼 클릭 시 상품 개수 감소
+                      minusButton.addEventListener("click", () => {
+                        if (productQuantity > 1) {
+                          productQuantity--;
+                          quantityInput.value = productQuantity;
+                        }
+                      });
+
+                      // 장바구니 버튼을 클릭했을 때 addToCart함수에 상품id와 상품 개수 보내기
+                      addToCartButtons.forEach((button) => {
+                        button.addEventListener("click", () => {
+                          addToCart(productId, productQuantity);
+                          console.log(productId, productQuantity);
+                        });
+                      });
+
+                      // 상품ID와 상품 개수를 PHP에 보내기
+                      function addToCart(productId, productQuantity) {
+                        fetch(
+                          `../db/add_to_cart.php?productId=${productId}&quantity=${productQuantity}`
+                        )
+                          .then((response) => {
+                            if (!response.ok) {
+                              throw new Error("서버 응답 오류");
+                            }
+                            return response.json();
+                          })
+                          .then((result) => {
+                            console.log(result);
+                          })
+                          .catch((error) => {
+                            console.error("에러 발생:", error);
+                          });
+                      }
+                    });
+                  </script>
                 </fieldset>
               </form>
             </div>
