@@ -2962,25 +2962,18 @@
         // JavaScript 코드
         $(document).ready(function () {
           $(".goDrinkView").click(function () {
+            // 클릭한 음료의 id를 추출
             const drinkId = $(this).attr("id");
 
-            $.ajax({
-              url: `/StarBucks/db/drink_info.php`,
-              method: "GET",
-              data: { drinkId: drinkId }, // 음료 ID를 전송
-              dataType: "json",
-              success: function (drinkInfo) {
-                // 서버에서 받은 음료 정보를 처리하여 웹 페이지에 표시
-                console.log(drinkInfo);
+            // AJAX 요청을 보내기 전에 URL에서 drinkId를 추출
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlDrinkId = urlParams.get("drinkId");
 
-                // 이 부분에서 음료 정보를 원하는 방식으로 웹 페이지에 추가
-                // 예를 들어, 상세 페이지로 이동하거나 모달 창에 정보를 표시할 수 있습니다.
-                window.location.href = `StarBucks/menu/drink_menu_1.html`;
-              },
-              error: function (error) {
-                console.error("에러 발생:", error);
-              },
-            });
+            // 추출한 값 확인 (개발 중에 사용)
+            console.log("Drink ID:", urlDrinkId);
+
+            // drinkId를 URL 파라미터로 전달하여 다음 페이지로 이동
+            window.location.href = `drink_menu_1.html?drinkId=${drinkId}`;
           });
         });
       </script>

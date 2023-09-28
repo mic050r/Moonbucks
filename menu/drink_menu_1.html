@@ -45,6 +45,9 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
+    <!-- JQuery추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/drink_menu.css" />
 
@@ -386,6 +389,35 @@
     </header>
 
     <!-- 음료 목록 -->
+    <script>
+      $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const drinkId = urlParams.get("drinkId");
+
+        $.ajax({
+          url: `../db/drink_info.php?drinkId=${drinkId}`,
+          method: "GET",
+          dataType: "json",
+          success: function (drinkInfo) {
+            // 서버에서 받은 음료 정보를 처리하여 웹 페이지에 표시
+            console.log(drinkInfo);
+
+            // 엘리먼트 선택자 개선
+            $(".product_name").text(drinkInfo.product_name);
+            $(".product_english_name").text(drinkInfo.product_english_name);
+            $(".description").text(drinkInfo.description);
+            $(".price").text(drinkInfo.price);
+          },
+          error: function (xhr, status, error) {
+            console.error("에러 발생:", error);
+            // 사용자에게 에러 메시지 표시
+            $("#error_message").text(
+              "음료 정보를 불러오는 중에 오류가 발생했습니다."
+            );
+          },
+        });
+      });
+    </script>
     <section class="dirink_menu_1">
       <id id="container">
         <!-- 서브 타이틀 -->
@@ -499,12 +531,13 @@
             </div>
             <div class="product_view_detail">
               <div class="myAssignZone">
-                <h4>
-                  미키 딜라이트 콜드 브루<br /><span
+                <h4 class="product_name">
+                  미키 딜라이트 콜드 브루<br />
+                  <span class="product_english_name"
                     >Mickey Delight Cold Brew</span
                   >
                 </h4>
-                <p class="t1">
+                <p class="description">
                   스타벅스와 디즈니의 색다른 만남! <br />달콤하고 부드러운
                   글레이즈드 폼과 깔끔한 콜드 브루의 조합 <br />번트 카라멜
                   토핑으로 표현한 미키 마우스를 통해 <br />즐거운 추억을 만들어
@@ -565,9 +598,7 @@
                     <div class="product_info_head">
                       <p class="tit">가격 정보</p>
                       <div class="product_select_wrap2">
-                        <div class="selectTxt2" id="product_info01">
-                          5,6000원
-                        </div>
+                        <div class="price" id="product_info01">5,6000원</div>
                       </div>
                     </div>
                     <!-- TODO : +, - 아이콘 추가하기 및 버튼에 따른 개수 증가 만들기 -->
@@ -605,6 +636,45 @@
                       >
                     </div>
                   </div>
+                  <!-- JavaScript 코드 -->
+                  <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                      const addToCartButtons =
+                        document.querySelectorAll(".addToCart");
+
+                      addToCartButtons.forEach((button) => {
+                        button.addEventListener("click", () => {
+                          // 클릭한 버튼에 연결된 상품 정보를 가져오거나 직접 정보를 설정합니다.
+                          const productId = 1; // 예: 상품 ID를 설정
+                          const quantity = 1; // 예: 수량을 설정
+
+                          // 서버로 상품 정보를 보내 장바구니에 추가 요청을 합니다.
+                          addToCart(productId, quantity);
+                        });
+                      });
+
+                      function addToCart(productId, quantity) {
+                        // AJAX 또는 Fetch를 사용하여 서버로 장바구니 추가 요청을 보냅니다.
+                        fetch(
+                          `/add_to_cart.php?productId=${productId}&quantity=${quantity}`
+                        )
+                          .then((response) => {
+                            if (!response.ok) {
+                              throw new Error("서버 응답 오류");
+                            }
+                            return response.json();
+                          })
+                          .then((result) => {
+                            // 장바구니 추가 결과를 처리합니다.
+                            console.log(result);
+                            // 이 부분에서 장바구니 추가 결과를 처리합니다.
+                          })
+                          .catch((error) => {
+                            console.error("에러 발생:", error);
+                          });
+                      }
+                    });
+                  </script>
                 </fieldset>
               </form>
             </div>
