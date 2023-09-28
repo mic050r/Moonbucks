@@ -4,9 +4,7 @@ session_start(); // 세션 시작
 // 클라이언트로부터 전송된 상품 ID와 수량 받기 (유효성 검사는 추가해야 함)
 $productId = $_GET['productId'];
 $quantity = $_GET['quantity'];
-
-// 세션에서 username 가져오기 (세션 변수명은 실제로 사용하는 변수명과 일치해야 함)
-$username = $_SESSION['username'];
+$username = $_GET['username'];
 
 
 // 데이터베이스 연결 설정 (connect.php 파일을 포함하여 사용)
@@ -18,7 +16,7 @@ $stmt = mysqli_prepare($conn, $query);
 
 if ($stmt) {
     mysqli_stmt_bind_param($stmt, 'sss', $username, $productId, $quantity);
-
+    
     if (mysqli_stmt_execute($stmt)) {
         $response = [
             'success' => true,

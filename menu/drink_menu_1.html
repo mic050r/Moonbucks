@@ -64,7 +64,7 @@
         <div class="sub-menu">
           <ul class="menu">
             <li>
-              <a href="/signin">Sign In</a>
+              <a href="../siginin/index.html">Sign In</a>
             </li>
             <li>
               <a href="javascript:void(0)">My Starbucks</a>
@@ -645,7 +645,7 @@
                         window.location.search
                       );
                       const productId = urlParams.get("drinkId");
-
+                      const username = "<?php echo $_SESSION['username']; ?>"; // PHP 세션에서 username 가져오기
                       const quantityInput =
                         document.getElementById("quantityInput");
                       const plusButton = document.getElementById("plusButton");
@@ -675,15 +675,15 @@
                       // 장바구니 버튼을 클릭했을 때 addToCart함수에 상품id와 상품 개수 보내기
                       addToCartButtons.forEach((button) => {
                         button.addEventListener("click", () => {
-                          addToCart(productId, productQuantity);
-                          console.log(productId, productQuantity);
+                          // 상품 ID와 개수, 그리고 username을 addToCart 함수에 전달
+                          addToCart(productId, productQuantity, username);
                         });
                       });
 
                       // 상품ID와 상품 개수를 PHP에 보내기
-                      function addToCart(productId, productQuantity) {
+                      function addToCart(productId, productQuantity, username) {
                         fetch(
-                          `../db/add_to_cart.php?productId=${productId}&quantity=${productQuantity}`
+                          `../db/add_to_cart.php?username=${username}productId=${productId}&quantity=${productQuantity}`
                         )
                           .then((response) => {
                             if (!response.ok) {
