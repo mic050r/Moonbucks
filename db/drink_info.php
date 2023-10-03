@@ -10,6 +10,7 @@ if (isset($_GET['drinkId'])) {
 
 // 데이터베이스 연결 설정
 include('./connect.php');
+mysqli_set_charset($conn, "utf8");
 
 
 // SQL 쿼리에서 $drinkId를 사용하기 전에 정수로 변환하고 이스케이프 처리
