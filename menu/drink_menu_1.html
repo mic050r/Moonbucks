@@ -48,6 +48,11 @@
     <!-- JQuery추가 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <?php 
+      ob_start(); // 출력 버퍼링 활성화
+      session_start(); // 세션 시작
+    ?>
+
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/drink_menu.css" />
 
@@ -636,6 +641,7 @@
                       >
                     </div>
                   </div>
+
                   <!-- JavaScript 코드 -->
                   <script>
                     document.addEventListener("DOMContentLoaded", () => {
@@ -645,13 +651,15 @@
                         window.location.search
                       );
                       const productId = urlParams.get("drinkId");
-                      const username = "<?php echo $_SESSION['username']; ?>"; // PHP 세션에서 username 가져오기
+                      const username =
+                        "<?php echo isset($_SESSION['username']) ? $_SESSION['username'] : ''; ?>";
                       const quantityInput =
                         document.getElementById("quantityInput");
                       const plusButton = document.getElementById("plusButton");
                       const minusButton =
                         document.getElementById("minusButton");
 
+                      console.log(username);
                       // 초기 상품 개수 설정
                       let productQuantity = 1;
 
@@ -683,7 +691,7 @@
                       // 상품ID와 상품 개수를 PHP에 보내기
                       function addToCart(productId, productQuantity, username) {
                         fetch(
-                          `../db/add_to_cart.php?username=${username}productId=${productId}&quantity=${productQuantity}`
+                          `../db/add_to_cart.php?username=${username}&productId=${productId}&quantity=${productQuantity}`
                         )
                           .then((response) => {
                             if (!response.ok) {
@@ -693,6 +701,13 @@
                           })
                           .then((result) => {
                             console.log(result);
+                            if (result.success) {
+                              // 장바구니에 상품이 성공적으로 추가되었을 때 메시지를 표시
+                              alert("장바구니에 추가되었습니다.");
+                            } else {
+                              // 추가 실패 시 메시지를 표시하거나 다른 조치를 취할 수 있음
+                              alert("장바구니 추가에 실패했습니다.");
+                            }
                           })
                           .catch((error) => {
                             console.error("에러 발생:", error);
