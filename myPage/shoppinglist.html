@@ -45,8 +45,10 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link rel="stylesheet" href="../css/common.css" />
-    <link rel="stylesheet" href="../css/signin.css" />
+    <link rel="stylesheet" href="../css/cart.css" />
 
     <script defer src="../js/common.js"></script>
   </head>
@@ -386,7 +388,59 @@
     </header>
 
     <!-- 장바구니 -->
-    <section class=""></section>
+    <section class="cart">
+      <h1>장바구니</h1>
+      <!-- 장바구니 내용 -->
+      <div id="cart-items">
+        <!-- JavaScript로 생성될 장바구니 항목들이 여기에 추가됩니다. -->
+      </div>
+
+      <!-- 총 가격 표시 -->
+      <div id="total-price">
+        <p>총 가격: $<span id="total-amount">0.00</span></p>
+      </div>
+
+      <!-- 결제 버튼 -->
+      <button id="checkout-button">결제</button>
+
+      <script>
+        // 페이지 로드 후 실행
+        $(document).ready(function () {
+          // AJAX를 사용하여 PHP 파일에서 데이터 가져오기
+          $.ajax({
+            type: "GET",
+            url: "../db/cart.php", // PHP 파일 경로에 따라 수정
+            dataType: "json",
+            success: function (data) {
+              if (data.length > 0) {
+                var totalAmount = 0;
+
+                // 데이터를 반복하여 표시
+                $.each(data, function (index, item) {
+                  var cartItem = "<div class='cart-item'>";
+                  cartItem += "<p>상품 이름: " + item.product_name + "</p>";
+                  cartItem += "<p>상품 개수: " + item.quantity + "</p>";
+                  cartItem += "<p>가격: $" + item.price + "</p>";
+                  cartItem += "</div>";
+                  $("#cart-items").append(cartItem);
+
+                  // 가격을 더해 총 가격 업데이트
+                  totalAmount += parseFloat(item.price);
+                });
+
+                // 총 가격 업데이트
+                $("#total-amount").text(totalAmount.toFixed(2));
+              } else {
+                $("#cart-items").html("장바구니가 비어 있습니다.");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("AJAX 오류: " + error);
+            },
+          });
+        });
+      </script>
+    </section>
 
     <!--FOOTER-->
     <footer>
