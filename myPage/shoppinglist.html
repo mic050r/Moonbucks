@@ -145,7 +145,7 @@
               <div class="contents__menu">
                 <ul class="inner">
                   <li>
-                    <a href="/menu/drink_list.html">음료</a>
+                    <a href="../menu/drink_list.html">음료</a>
                     <ul>
                       <li>콜드 브루</li>
                       <li>브루드 커피</li>
@@ -392,12 +392,12 @@
       <h1>장바구니</h1>
       <!-- 장바구니 내용 -->
       <div id="cart-items">
-        <!-- JavaScript로 생성될 장바구니 항목들이 여기에 추가됩니다. -->
+        <!-- JavaScript로 생성될 장바구니 항목들이 여기에 추가 -->
       </div>
 
       <!-- 총 가격 표시 -->
       <div id="total-price">
-        <p>총 가격: $<span id="total-amount">0.00</span></p>
+        <p>총 가격: <span id="total-amount">원</span></p>
       </div>
 
       <!-- 결제 버튼 -->
@@ -418,9 +418,10 @@
                 // 데이터를 반복하여 표시
                 $.each(data, function (index, item) {
                   var cartItem = "<div class='cart-item'>";
-                  cartItem += "<p>상품 이름: " + item.product_name + "</p>";
-                  cartItem += "<p>상품 개수: " + item.quantity + "</p>";
-                  cartItem += "<p>가격: $" + item.price + "</p>";
+                  cartItem += "<p>상품 이름: " + item.product_name + "    </p>";
+                  cartItem += "<p>상품 개수: " + item.quantity + "개   </p>";
+                  cartItem +=
+                    "<p>가격: " + item.quantity * item.price + "원 </p>";
                   cartItem += "</div>";
                   $("#cart-items").append(cartItem);
 
@@ -429,7 +430,7 @@
                 });
 
                 // 총 가격 업데이트
-                $("#total-amount").text(totalAmount.toFixed(2));
+                $("#total-amount").text(totalAmount + "원");
               } else {
                 $("#cart-items").html("장바구니가 비어 있습니다.");
               }
