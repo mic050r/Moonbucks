@@ -83,7 +83,7 @@
         const drinkId = urlParams.get("drinkId");
 
         $.ajax({
-          url: `../db/drink_info.php?drinkId=${drinkId}`,
+          url: `./app/controllers/drink_info.php?drinkId=${drinkId}`,
           method: "GET",
           dataType: "json",
           contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -374,7 +374,7 @@
                       // 상품ID와 상품 개수를 PHP에 보내기
                       function addToCart(productId, productQuantity, username) {
                         fetch(
-                          `../db/add_to_cart.php?username=${username}&productId=${productId}&quantity=${productQuantity}`
+                          `../app/controllers/add_to_cart.php?username=${username}&productId=${productId}&quantity=${productQuantity}`
                         )
                           .then((response) => {
                             if (!response.ok) {

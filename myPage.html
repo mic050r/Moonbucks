@@ -92,7 +92,7 @@
       </div>
 
       <!-- 결제 버튼 -->
-<!-- 
+
       <button id="checkout-button" onclick="requestPay()">결제하기</button>
       <script>
         var IMP = window.IMP;
@@ -126,7 +126,7 @@
             alert(msg);
           }
         );
-      </script> -->
+      </script>
 
       <script>
         // 페이지 로드 후 실행
@@ -134,7 +134,7 @@
           // AJAX를 사용하여 PHP 파일에서 데이터 가져오기
           $.ajax({
             type: "GET",
-            url: "../db/cart.php", // PHP 파일 경로에 따라 수정
+            url: "./app/controllers/cart.php", // PHP 파일 경로에 따라 수정
             dataType: "json",
             success: function (data) {
               if (data.length > 0) {
