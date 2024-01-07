@@ -63,10 +63,23 @@
           <img src="./images/starbucks_logo.png" alt="STARBUCKS" />
         </a>
 
+        <?php
+          session_start(); // 세션 시작
+
+          if (isset($_SESSION['username'])) {
+              // 로그인된 사용자인 경우
+              $link = './myPage/shoppinglist.html';
+              $text = 'My Page';
+          } else {
+              // 로그인되지 않은 사용자인 경우
+              $link = './siginin/index.html';
+              $text = 'Sign In';
+          }
+        ?>
         <div class="sub-menu">
           <ul class="menu">
             <li>
-              <a href="siginin/index.html">Sign In</a>
+              <a href="<?php echo $link; ?>"><?php echo $text; ?></a>
             </li>
             <li>
               <a href="javascript:void(0)">My Starbucks</a>
