@@ -52,6 +52,8 @@
       href="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.css" />
     <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js"></script>
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/ScrollMagic.js"></script>
     <script defer src="./js/youtube.js"></script>
     <script defer src="./js/main.js"></script>
   </head>
@@ -66,9 +68,19 @@
       // Twig 환경 생성: Twig 렌더링을 위한 환경 설정
       $twig = new \Twig\Environment($loader);
 
-      // 템플릿 렌더링: 지정된 템플릿 파일('header.twig')을 Twig 엔진을 사용하여 렌더링
-      echo $twig->render('header.twig'); echo $twig->render('main.twig'); echo
-    $twig->render('footer.twig'); ?>
+      // 세션 시작
+      session_start();
+      // 템플릿 렌더링: 지정된 템플릿 파일('header.twig')을 Twig 엔진을 사 용하여 렌더링
+      // index.html 파일의 일부분
+// 세션에 'username'이 존재하는지 여부 확인
+$isUserLoggedIn = isset($_SESSION['username']);
+      // 세션에 저장된 사용자 이름 출력
+      
+      echo "<script>alert('{$_SESSION['username']}')</script>";
+      echo $twig->render('header.twig', ['isUserLoggedIn' => $isUserLoggedIn]);
+      echo $twig->render('main.twig');
+      echo $twig->render('footer.twig');
+      ?>
 
     <!--TO TOP BUTTON-->
     <div id="to-top">

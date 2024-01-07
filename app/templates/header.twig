@@ -1,12 +1,19 @@
-<header>
+  <header>
       <div class="inner">
             <a href="/" class="logo">
-                <img src="./images/starbucks_logo.png" alt="STARBUCKS" />
+                <img src="/StarBucks/images/starbucks_logo.png" alt="STARBUCKS" />
             </a>
 
-            {% set link = session['username'] is defined ? './myPage.html' : './login.html' %}
-            {% set text = session['username'] is defined ? 'My Page' : 'Sign In' %}
-
+            {% if isUserLoggedIn %}
+                {# 로그인된 사용자인 경우 #}
+                {% set link = './myPage.html' %}
+                {% set text = 'My Page' %}
+            {% else %}
+                {# 로그인되지 않은 사용자인 경우 #}
+                {% set link = './login.html' %}
+                {% set text = 'Sign In' %}
+            {% endif %}
+            
             <div class="sub-menu">
                 <ul class="menu">
                     <li>

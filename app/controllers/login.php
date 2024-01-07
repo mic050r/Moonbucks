@@ -12,6 +12,7 @@ $password = $_POST['password'];
 $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
 $result = mysqli_query($conn, $query);
 
+
 if (mysqli_num_rows($result) == 1) {
     // 로그인 성공
     $_SESSION['username'] = $username;
