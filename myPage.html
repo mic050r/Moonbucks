@@ -55,10 +55,10 @@
       src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <link rel="stylesheet" href="../css/common.css" />
-    <link rel="stylesheet" href="../css/cart.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" type="text/css" href="public/css/cart.css">
 
-    <script defer src="../js/common.js"></script>
+    <script defer src="./js/common.js"></script>
   </head>
   <body>
     <?php
@@ -71,8 +71,12 @@
       // Twig 환경 생성: Twig 렌더링을 위한 환경 설정
       $twig = new \Twig\Environment($loader);
 
-      // 템플릿 렌더링: 지정된 템플릿 파일('header.twig')을 Twig 엔진을 사용하여 렌더링
-      echo $twig->render('header.twig'); ?>
+      // 세션 시작
+      session_start();
+      $isUserLoggedIn = isset($_SESSION['username']);
+      
+      echo $twig->render('header.twig', ['isUserLoggedIn' => $isUserLoggedIn]);
+      ?>
 
     <!-- 장바구니 -->
     <section class="cart">
@@ -88,7 +92,7 @@
       </div>
 
       <!-- 결제 버튼 -->
-
+<!-- 
       <button id="checkout-button" onclick="requestPay()">결제하기</button>
       <script>
         var IMP = window.IMP;
@@ -122,7 +126,7 @@
             alert(msg);
           }
         );
-      </script>
+      </script> -->
 
       <script>
         // 페이지 로드 후 실행
