@@ -54,7 +54,7 @@
     <?php
       // Composer를 통해 설치한 패키지를 autoload.php를 통해 로드
       require_once __DIR__ . '/vendor/autoload.php';
-
+      
       // Twig 로더 생성: Twig 템플릿 파일을 로드하는 역할
       $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/app/templates');
 
@@ -63,7 +63,7 @@
 
       // 템플릿 렌더링: 지정된 템플릿 파일('header.twig')을 Twig 엔진을 사용하여 렌더링
       
-      echo $twig->render('header.twig'); echo $twig->render('login.twig'); echo
+      echo $twig->render('header.twig'); echo $twig->render('login.twig', ['session' => $_SESSION]); echo
     $twig->render('footer.twig'); ?>
   </body>
 </html>
