@@ -374,7 +374,7 @@
                       // 상품ID와 상품 개수를 PHP에 보내기
                       function addToCart(productId, productQuantity, username) {
                         fetch(
-                          `../app/controllers/add_to_cart.php?username=${username}&productId=${productId}&quantity=${productQuantity}`
+                          `./app/controllers/add_to_cart.php?username=${username}&productId=${productId}&quantity=${productQuantity}`
                         )
                           .then((response) => {
                             if (!response.ok) {
