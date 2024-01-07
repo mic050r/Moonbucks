@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Starbucks Coffee Korea</title>
+
+    <!--Open Graph-->
+    <!--http://ogp.me/-->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Starbucks" />
+    <meta property="og:title" content="Starbucks Coffee Korea" />
+    <meta
+      property="og:description"
+      content="스타벅스는 세계에서 가장 큰 다국적 커피 전문점으로, 64개국에서 총 23,187개의 매점을 운영하고 있습니다." />
+    <meta property="og:image" content="../images/starbucks_seo.jpg" />
+    <meta property="og:url" content="https://starbucks.co.kr" />
+
+    <!--Twitter Card-->
+    <!--https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started-->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:site" content="Starbucks" />
+    <meta property="twitter:title" content="Starbucks Coffee Korea" />
+    <meta
+      property="twitter:description"
+      content="스타벅스는 세계에서 가장 큰 다국적 커피 전문점으로, 64개국에서 총 23,187개의 매점을 운영하고 있습니다." />
+    <meta property="twitter:image" content="../images/starbucks_seo.jpg" />
+    <meta property="twitter:url" content="https://starbucks.co.kr" />
+
+    <!--파비콘-->
+    <!--<link rel="shortcut icon" href="favicon.ico" />-->
+    <link rel="icon" href="../favicon.png" />
+    <!--브라우저 스타일 초기화-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+    <!--Google Fonts - 나눔고딕-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap"
+      rel="stylesheet" />
+    <!--Google Material Icons-->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <!-- jQuery -->
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!-- iamport.payment.js -->
+    <script
+      type="text/javascript"
+      src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/cart.css" />
+
+    <script defer src="../js/common.js"></script>
+  </head>
+  <body>
+    <?php
+      // Composer를 통해 설치한 패키지를 autoload.php를 통해 로드
+      require_once __DIR__ . '/vendor/autoload.php';
+
+      // Twig 로더 생성: Twig 템플릿 파일을 로드하는 역할
+      $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/app/templates');
+
+      // Twig 환경 생성: Twig 렌더링을 위한 환경 설정
+      $twig = new \Twig\Environment($loader);
+
+      // 템플릿 렌더링: 지정된 템플릿 파일('header.twig')을 Twig 엔진을 사용하여 렌더링
+      echo $twig->render('header.twig'); ?>
+
+    <!-- 장바구니 -->
+    <section class="cart">
+      <h1>장바구니</h1>
+      <!-- 장바구니 내용 -->
+      <div id="cart-items">
+        <!-- JavaScript로 생성될 장바구니 항목들이 여기에 추가됩니다. -->
+      </div>
+
+      <!-- 총 가격 표시 -->
+      <div id="total-price">
+        <p>총 가격: $<span id="total-amount">0.00</span></p>
+      </div>
+
+      <!-- 결제 버튼 -->
+
+      <button id="checkout-button" onclick="requestPay()">결제하기</button>
+      <script>
+        var IMP = window.IMP;
+        IMP.init("imp75433325");
+
+        IMP.request_pay(
+          {
+            pg: "html5_inicis",
+            pay_method: "vbank", // card는 카드
+            merchant_uid: "merchant_" + new Date().getTime(),
+            name: "주문명:결제테스트",
+            amount: 14000,
+            buyer_email: "iamport@siot.do",
+            buyer_name: "구매자이름",
+            buyer_tel: "010-1234-5678",
+            buyer_addr: "서울특별시 강남구 삼성동",
+            buyer_postcode: "123-456",
+          },
+          function (rsp) {
+            if (rsp.success) {
+              var msg = "결제가 완료되었습니다.";
+              msg += "고유ID : " + rsp.imp_uid;
+              msg += "상점 거래ID : " + rsp.merchant_uid;
+              msg += "결제 금액 : " + rsp.paid_amount;
+              msg += "카드 승인번호 : " + rsp.apply_num;
+            } else {
+              var msg = "결제에 실패하였습니다.";
+              msg += "에러내용 : " + rsp.error_msg;
+            }
+
+            alert(msg);
+          }
+        );
+      </script>
+
+      <script>
+        // 페이지 로드 후 실행
+        $(document).ready(function () {
+          // AJAX를 사용하여 PHP 파일에서 데이터 가져오기
+          $.ajax({
+            type: "GET",
+            url: "../db/cart.php", // PHP 파일 경로에 따라 수정
+            dataType: "json",
+            success: function (data) {
+              if (data.length > 0) {
+                var totalAmount = 0;
+
+                // 데이터를 반복하여 표시
+                $.each(data, function (index, item) {
+                  var cartItem = "<div class='cart-item'>";
+                  cartItem += "<p>상품 이름: " + item.product_name + "</p>";
+                  cartItem += "<p>상품 개수: " + item.quantity + "</p>";
+                  cartItem += "<p>가격: $" + item.price + "</p>";
+                  cartItem += "</div>";
+                  $("#cart-items").append(cartItem);
+
+                  // 가격을 더해 총 가격 업데이트
+                  totalAmount += parseFloat(item.price);
+                });
+
+                // 총 가격 업데이트
+                $("#total-amount").text(totalAmount.toFixed(2));
+              } else {
+                $("#cart-items").html("장바구니가 비어 있습니다.");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("AJAX 오류: " + error);
+            },
+          });
+        });
+      </script>
+    </section>
+
+    <!--FOOTER-->
+    <?php
+    echo $twig->render('footer.twig'); ?>
+  </body>
+</html>
