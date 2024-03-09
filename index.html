@@ -33,6 +33,7 @@
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    
     <link rel="stylesheet" href="./css/main.css" />
 
     <script
@@ -56,6 +57,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/ScrollMagic.js"></script>
     <script defer src="./js/youtube.js"></script>
     <script defer src="./js/main.js"></script>
+    
   </head>
   <body>
     <?php
@@ -76,7 +78,7 @@
       $isUserLoggedIn = isset($_SESSION['username']);
       // 세션에 저장된 사용자 이름 출력
       
-      echo "<script>alert('{$_SESSION['username']}')</script>";
+      // echo "<script>alert('{$_SESSION['username']}')</script>";
       echo $twig->render('header.twig', ['isUserLoggedIn' => $isUserLoggedIn]);
       echo $twig->render('main.twig');
       echo $twig->render('footer.twig');
