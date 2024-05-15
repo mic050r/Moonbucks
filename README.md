@@ -53,6 +53,13 @@
 
 - session을 받아 twig에 로그인 여부 보내기
 
-## ✅ 프로젝트 구조
+## ✅ 프로젝트 구조 & ERD
+**ERD**
+
+<img src="https://github.com/mic050r/StarBucks/assets/103114387/60c73ad8-76e1-4c79-bb23-bc700fa4a8b5" width="700">
+
+
+**프로젝트 구조**
+
 ![image](https://github.com/mic050r/StarBucks/assets/103114387/48f39d92-549a-4586-8d12-8ab18e75bec9)
 
